@@ -1,8 +1,8 @@
 {
-  "name": "hello-world",
+  "name": "tray",
   "version": "0.0.0",
-  "description": "Hello World plugin description",
-  "repository": "https://github.com/jmerle/inkdrop-hello-world",
+  "description": "Minimize and close to tray functionality for Inkdrop",
+  "repository": "https://github.com/jmerle/inkdrop-tray",
   "license": "MIT",
   "main": "./dist/index",
   "scripts": {
