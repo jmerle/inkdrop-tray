@@ -21,8 +21,10 @@ function createIcon() {
 
 function createMenu() {
   return _electron.remote.Menu.buildFromTemplate([{
-    label: 'Show',
+    label: 'Show Inkdrop',
     click: () => inkdrop.window.show()
+  }, {
+    type: 'separator'
   }, {
     label: 'Quit',
     click: () => _electron.remote.app.quit()

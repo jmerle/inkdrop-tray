@@ -14,9 +14,10 @@ function createIcon() {
 function createMenu() {
   return remote.Menu.buildFromTemplate([
     {
-      label: 'Show',
+      label: 'Show Inkdrop',
       click: () => inkdrop.window.show(),
     },
+    { type: 'separator' },
     {
       label: 'Quit',
       click: () => remote.app.quit(),
