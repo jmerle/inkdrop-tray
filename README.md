@@ -4,6 +4,8 @@
 [![Latest release)](https://img.shields.io/github/v/release/jmerle/inkdrop-tray)](https://my.inkdrop.app/plugins/tray)
 [![License](https://img.shields.io/github/license/jmerle/inkdrop-tray)](https://github.com/jmerle/inkdrop-tray/blob/master/LICENSE)
 
+![](https://i.imgur.com/3qZ9E5Z.png)
+
 This plugin shows a tray icon for Inkdrop and makes it possible to minimize Inkdrop to tray. Minimizing to tray can be disabled in the plugin's settings.
 
 ## Install
