@@ -1,7 +1,7 @@
 # Tray plugin for Inkdrop
 
 [![Build Status](https://dev.azure.com/jmerle/inkdrop-tray/_apis/build/status/Build?branchName=master)](https://dev.azure.com/jmerle/inkdrop-tray/_build/latest?definitionId=16&branchName=master)
-[![Latest release)](https://img.shields.io/github/v/release/jmerle/inkdrop-tray)](https://my.inkdrop.app/plugins/tray)
+[![Latest release](https://img.shields.io/github/v/release/jmerle/inkdrop-tray)](https://my.inkdrop.app/plugins/tray)
 [![License](https://img.shields.io/github/license/jmerle/inkdrop-tray)](https://github.com/jmerle/inkdrop-tray/blob/master/LICENSE)
 
 ![](https://i.imgur.com/ua13ek2.png)
