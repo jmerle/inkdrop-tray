@@ -1,7 +1,7 @@
 {
   "name": "tray",
   "version": "0.0.0",
-  "description": "Minimize and close to tray functionality for Inkdrop",
+  "description": "Minimize to tray functionality for Inkdrop",
   "repository": "https://github.com/jmerle/inkdrop-tray",
   "license": "MIT",
   "main": "./dist/index",
