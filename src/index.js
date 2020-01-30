@@ -24,9 +24,8 @@ function createMenu() {
   ]);
 }
 
-function onMinimize(event) {
+function onMinimize() {
   if (inkdrop.config.get('tray.minimizeToTray')) {
-    event.preventDefault();
     inkdrop.window.hide();
   }
 }
@@ -49,8 +48,12 @@ export function activate() {
   tray.setContextMenu(createMenu());
   tray.on('click', () => inkdrop.window.show());
 
-  onMinimizeCallback = event => onMinimize(event);
+  onMinimizeCallback = () => onMinimize();
   inkdrop.window.on('minimize', onMinimizeCallback);
+
+  if (inkdrop.window.isMinimized()) {
+    onMinimize();
+  }
 }
 
 export function deactivate() {
