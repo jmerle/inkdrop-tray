@@ -10,6 +10,7 @@ exports.config = void 0;
 var _electron = require("electron");
 
 let tray = null;
+let onMinimizeCallback = null;
 
 function createIcon() {
   // Taken from https://inkdrop.app/icons/icon-48x48.png
@@ -26,6 +27,12 @@ function createMenu() {
     label: 'Quit',
     click: () => _electron.remote.app.quit()
   }]);
+}
+
+function onMinimize() {
+  if (inkdrop.config.get('tray.minimizeToTray')) {
+    inkdrop.window.hide();
+  }
 }
 
 const config = {
@@ -46,17 +53,21 @@ function activate() {
   tray.setToolTip('Inkdrop');
   tray.setContextMenu(createMenu());
   tray.on('click', () => inkdrop.window.show());
-  inkdrop.window.on('minimize', () => {
-    if (inkdrop.config.get('tray.minimizeToTray')) {
-      inkdrop.window.hide();
-    }
-  });
+
+  onMinimizeCallback = () => onMinimize();
+
+  inkdrop.window.on('minimize', onMinimizeCallback);
 }
 
 function deactivate() {
   if (tray !== null) {
     tray.destroy();
     tray = null;
+  }
+
+  if (onMinimizeCallback !== null) {
+    inkdrop.window.off('minimize', onMinimizeCallback);
+    onMinimizeCallback = null;
   }
 }
 //# sourceMappingURL=index.js.map

@@ -1,6 +1,7 @@
 import { remote } from 'electron';
 
 let tray = null;
+let onMinimizeCallback = null;
 
 function createIcon() {
   // Taken from https://inkdrop.app/icons/icon-48x48.png
@@ -23,6 +24,12 @@ function createMenu() {
   ]);
 }
 
+function onMinimize() {
+  if (inkdrop.config.get('tray.minimizeToTray')) {
+    inkdrop.window.hide();
+  }
+}
+
 export const config = {
   minimizeToTray: {
     title: 'Minimize to tray',
@@ -41,16 +48,18 @@ export function activate() {
   tray.setContextMenu(createMenu());
   tray.on('click', () => inkdrop.window.show());
 
-  inkdrop.window.on('minimize', () => {
-    if (inkdrop.config.get('tray.minimizeToTray')) {
-      inkdrop.window.hide();
-    }
-  });
+  onMinimizeCallback = () => onMinimize();
+  inkdrop.window.on('minimize', onMinimizeCallback);
 }
 
 export function deactivate() {
   if (tray !== null) {
     tray.destroy();
     tray = null;
+  }
+
+  if (onMinimizeCallback !== null) {
+    inkdrop.window.off('minimize', onMinimizeCallback);
+    onMinimizeCallback = null;
   }
 }
