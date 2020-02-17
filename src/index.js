@@ -17,6 +17,16 @@ function createMenu() {
       label: 'Show Inkdrop',
       click: () => inkdrop.window.show(),
     },
+    {
+      label: 'New Note',
+      click: () => {
+        inkdrop.window.once('show', () => {
+          inkdrop.commands.dispatch(document.body, 'core:new-note');
+        });
+
+        inkdrop.window.show();
+      },
+    },
     { type: 'separator' },
     {
       label: 'Quit',
