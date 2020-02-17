@@ -67,6 +67,8 @@ export function activate() {
   onMinimizeCallback = () => onMinimize();
   inkdrop.window.on('minimize', onMinimizeCallback);
 
+  window.addEventListener('unload', () => deactivate());
+
   if (inkdrop.window.isMinimized()) {
     onMinimize();
   }
