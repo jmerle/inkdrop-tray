@@ -7,6 +7,3 @@ steps:
 
   - script: yarn lint
     displayName: Lint
-
-  - script: yarn build
-    displayName: Build

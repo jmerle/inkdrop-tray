@@ -108,6 +108,3 @@ tmp/
 temp/
 
 # End of https://www.gitignore.io/api/node
-
-# Don't ignore the dist/ folder, it must be tracked to support mobile plugins
-!dist

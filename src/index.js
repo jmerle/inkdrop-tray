@@ -1,3 +1,5 @@
+'use babel';
+
 import { remote } from 'electron';
 
 let tray = null;
