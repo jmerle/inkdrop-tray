@@ -1,6 +1,6 @@
 # Tray plugin for Inkdrop
 
-[![Build Status](https://dev.azure.com/jmerle/inkdrop-tray/_apis/build/status/Build?branchName=master)](https://dev.azure.com/jmerle/inkdrop-tray/_build/latest?definitionId=16&branchName=master)
+[![Build Status](https://github.com/jmerle/inkdrop-tray/workflows/Build/badge.svg)](https://github.com/jmerle/inkdrop-tray/actions?query=workflow%3ABuild)
 [![Latest release](https://img.shields.io/github/v/release/jmerle/inkdrop-tray)](https://my.inkdrop.app/plugins/tray)
 [![License](https://img.shields.io/github/license/jmerle/inkdrop-tray)](https://github.com/jmerle/inkdrop-tray/blob/master/LICENSE)
 
