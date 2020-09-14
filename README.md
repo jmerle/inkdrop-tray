@@ -1,7 +1,8 @@
 # Tray plugin for Inkdrop
 
 [![Build Status](https://github.com/jmerle/inkdrop-tray/workflows/Build/badge.svg)](https://github.com/jmerle/inkdrop-tray/actions?query=workflow%3ABuild)
-[![Latest release](https://img.shields.io/github/v/release/jmerle/inkdrop-tray)](https://my.inkdrop.app/plugins/tray)
+[![Latest release](https://inkdrop-plugin-badge.vercel.app/api/version/tray?style=flat)](https://my.inkdrop.app/plugins/tray)
+[![Downloads](https://inkdrop-plugin-badge.vercel.app/api/downloads/tray?style=flat)](https://my.inkdrop.app/plugins/tray)
 [![License](https://img.shields.io/github/license/jmerle/inkdrop-tray)](https://github.com/jmerle/inkdrop-tray/blob/master/LICENSE)
 
 ![](./media/tray.png)
