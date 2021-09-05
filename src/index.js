@@ -39,9 +39,11 @@ function createMenu() {
 
 function onMinimize() {
   if (inkdrop.config.get('tray.minimizeToTray')) {
-    // We need to blur before we hide to ensure application:toggle-main-window can bring it back
-    // See https://forum.inkdrop.app/t/application-toggle-main-window-on-windows-10/1745
-    inkdrop.window.blur();
+    if (inkdrop.clientInfo.clientName === 'win32') {
+      inkdrop.window.maximize();
+      inkdrop.window.blur();
+    }
+
     inkdrop.window.hide();
   }
 }
