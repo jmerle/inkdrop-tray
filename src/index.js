@@ -3,7 +3,13 @@
 import { remote } from 'electron';
 
 let tray = null;
+
 let onMinimizeCallback = null;
+let onMaximizeCallback = null;
+let onUnmaximizeCallback = null;
+let onRestoreCallback = null;
+
+let isMaximized = false;
 
 function createIcon() {
   // Base64 version of https://inkdrop.app/icons/icon-48x48.png
@@ -39,13 +45,20 @@ function createMenu() {
 
 function onMinimize() {
   if (inkdrop.config.get('tray.minimizeToTray')) {
-    if (inkdrop.clientInfo.clientName === 'win32') {
+    if (isMaximized) {
+      // Make sure the window opens in maximized state if it was maximized before it was minimized
       inkdrop.window.maximize();
-      inkdrop.window.blur();
     }
 
+    // We need to blur before we hide to ensure application:toggle-main-window brings it back
+    // See https://forum.inkdrop.app/t/application-toggle-main-window-on-windows-10/1745
+    inkdrop.window.blur();
     inkdrop.window.hide();
   }
+}
+
+function updateIsMaximized() {
+  isMaximized = inkdrop.window.isMaximized();
 }
 
 export const config = {
@@ -69,7 +82,18 @@ export function activate() {
   onMinimizeCallback = () => onMinimize();
   inkdrop.window.on('minimize', onMinimizeCallback);
 
+  onMaximizeCallback = () => updateIsMaximized();
+  inkdrop.window.on('maximize', onMaximizeCallback);
+
+  onUnmaximizeCallback = () => updateIsMaximized();
+  inkdrop.window.on('unmaximize', onUnmaximizeCallback);
+
+  onRestoreCallback = () => updateIsMaximized();
+  inkdrop.window.on('restore', onRestoreCallback);
+
   window.addEventListener('unload', () => deactivate());
+
+  updateIsMaximized();
 
   if (inkdrop.window.isMinimized()) {
     onMinimize();
@@ -85,5 +109,20 @@ export function deactivate() {
   if (onMinimizeCallback !== null) {
     inkdrop.window.off('minimize', onMinimizeCallback);
     onMinimizeCallback = null;
+  }
+
+  if (onMaximizeCallback !== null) {
+    inkdrop.window.off('maximize', onMaximizeCallback);
+    onMaximizeCallback = null;
+  }
+
+  if (onUnmaximizeCallback !== null) {
+    inkdrop.window.off('unmaximize', onUnmaximizeCallback);
+    onUnmaximizeCallback = null;
+  }
+
+  if (onRestoreCallback !== null) {
+    inkdrop.window.off('restore', onRestoreCallback);
+    onRestoreCallback = null;
   }
 }
