@@ -7,7 +7,7 @@
 
 ![](./media/tray.png)
 
-This plugin shows a tray icon for Inkdrop and makes it possible to minimize Inkdrop to tray. Minimizing to tray can be disabled in the plugin's settings.
+This plugin shows a tray icon for Inkdrop and makes it possible to minimize Inkdrop to tray. Minimizing to tray can be disabled in the plugin's settings. The tray icon can also be changed to a monochrome icon in the plugin's settings.
 
 ## Install
 
