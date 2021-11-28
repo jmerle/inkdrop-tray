@@ -1,6 +1,6 @@
 {
   "name": "tray",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Tray functionality for Inkdrop",
   "repository": "https://github.com/jmerle/inkdrop-tray",
   "license": "MIT",
