@@ -1,6 +1,6 @@
 'use babel';
 
-import { remote } from 'electron';
+import * as remote from '@electron/remote';
 
 let tray = null;
 
