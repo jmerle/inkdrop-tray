@@ -5,6 +5,7 @@ import * as remote from '@electron/remote';
 let tray = null;
 
 let onMinimizeCallback = null;
+let onBeforeUnloadCallback = null;
 let onMaximizeCallback = null;
 let onUnmaximizeCallback = null;
 let onRestoreCallback = null;
@@ -52,7 +53,16 @@ function createMenu() {
     { type: 'separator' },
     {
       label: 'Quit',
-      click: () => remote.app.quit(),
+      click: () => {
+        // remote.app.quit() cancels if a window's beforeunload event returns false
+        // This is the case when close to tray is enabled, so in that case we force quit using remote.app.exit()
+        if (inkdrop.config.get('tray.closeToTray')) {
+          inkdrop.packages.deactivatePackages();
+          remote.app.exit();
+        } else {
+          remote.app.quit();
+        }
+      },
     },
   ]);
 }
@@ -68,17 +78,30 @@ function createTray() {
   tray.on('click', () => inkdrop.window.show());
 }
 
+function hideToTray() {
+  if (isMaximized) {
+    // Make sure the window opens in maximized state if it was maximized before it was minimized
+    inkdrop.window.maximize();
+  }
+
+  // We need to blur before we hide to ensure application:toggle-main-window brings it back
+  // See https://forum.inkdrop.app/t/application-toggle-main-window-on-windows-10/1745
+  inkdrop.window.blur();
+  inkdrop.window.hide();
+}
+
 function onMinimize() {
   if (inkdrop.config.get('tray.minimizeToTray')) {
-    if (isMaximized) {
-      // Make sure the window opens in maximized state if it was maximized before it was minimized
-      inkdrop.window.maximize();
-    }
+    hideToTray();
+  }
+}
 
-    // We need to blur before we hide to ensure application:toggle-main-window brings it back
-    // See https://forum.inkdrop.app/t/application-toggle-main-window-on-windows-10/1745
-    inkdrop.window.blur();
-    inkdrop.window.hide();
+function onBeforeUnload(event) {
+  if (inkdrop.config.get('tray.closeToTray')) {
+    hideToTray();
+
+    event.returnValue = false;
+    return false;
   }
 }
 
@@ -91,6 +114,11 @@ export const config = {
     title: 'Minimize to tray',
     type: 'boolean',
     default: true,
+  },
+  closeToTray: {
+    title: 'Close to tray',
+    type: 'boolean',
+    default: false,
   },
   useMonochromeIcon: {
     title: 'Use monochrome icon',
@@ -110,6 +138,9 @@ export function activate() {
 
   onMinimizeCallback = () => onMinimize();
   inkdrop.window.on('minimize', onMinimizeCallback);
+
+  onBeforeUnloadCallback = event => onBeforeUnload(event);
+  window.addEventListener('beforeunload', onBeforeUnloadCallback);
 
   onMaximizeCallback = () => updateIsMaximized();
   inkdrop.window.on('maximize', onMaximizeCallback);
@@ -138,6 +169,11 @@ export function deactivate() {
   if (onMinimizeCallback !== null) {
     inkdrop.window.off('minimize', onMinimizeCallback);
     onMinimizeCallback = null;
+  }
+
+  if (onBeforeUnloadCallback !== null) {
+    window.removeEventListener('beforeunload', onBeforeUnloadCallback);
+    onBeforeUnloadCallback = null;
   }
 
   if (onMaximizeCallback !== null) {
